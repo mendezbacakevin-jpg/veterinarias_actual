@@ -1,49 +1,31 @@
 package com.cibertec.veterinaria.api.controller;
 
-import com.cibertec.veterinaria.data.entity.*;
+import com.cibertec.veterinaria.api.dto.cita.CitaRequestDto;
+import com.cibertec.veterinaria.data.entity.Cita;
 import com.cibertec.veterinaria.domain.service.interfaces.ICitaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity; // ✅ IMPORT FALTANTE
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
+import java.util.List;
 
-
-@Controller
-@RequestMapping("/api/cita")
+@RestController
+@RequestMapping("/api/citas")
+@CrossOrigin(origins = "*")
 public class CitaController {
 
     @Autowired
     private ICitaService citaService;
 
-    @GetMapping("/citas")
-    public String listar(Model model) {
-
-        model.addAttribute("citas", citaService.listarCitas());
-
-        return "listarRegistro";
+    // 🔹 LISTAR
+    @GetMapping
+    public ResponseEntity<?> listar() {
+        return ResponseEntity.ok(citaService.listarCitas());
     }
 
-    @GetMapping("/form-cita")
-    public String form(Model model) {
-
-        Cita cita = new Cita();
-        cita.setPrecio_cita(new BigDecimal("50.00"));
-        cita.setTotal(new BigDecimal("50.00"));
-
-        model.addAttribute("cita", cita);
-
-        return "form-cita";
-    }
-
-    @PostMapping("/grabar")
-    public String grabar(@ModelAttribute Cita cita, Model model) {
-
-        citaService.guardarCita(cita);
-
-        model.addAttribute("mensaje", "Cita registrada correctamente");
-
-        return "form-cita";
+    // 🔹 CREAR (SIN DTO)
+    @PostMapping("/lote")
+    public ResponseEntity<?> crearLote(@RequestBody List<CitaRequestDto> lista) {
+        return ResponseEntity.ok(citaService.crearLote(lista));
     }
 }

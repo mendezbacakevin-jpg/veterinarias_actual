@@ -1,25 +1,41 @@
 package com.cibertec.veterinaria.api.controller;
 
-
+import com.cibertec.veterinaria.api.dto.servicio.ServicioRequestDto;
+import com.cibertec.veterinaria.api.dto.servicio.ServicioResponseDto;
 import com.cibertec.veterinaria.domain.service.interfaces.IServicioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/api/servicio")
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/servicios") // 🔹 endpoint base
+@CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class ServicioController {
 
-    @Autowired
-    private IServicioService servicioService;
+    private final IServicioService servicioService;
 
-    @GetMapping("/listar")
-    public String listar(Model model) {
+    // 🔹 LISTAR SERVICIOS
+    @GetMapping
+    public ResponseEntity<List<ServicioResponseDto>> listar() {
 
-        model.addAttribute("servicios", servicioService.listarServicios());
+        List<ServicioResponseDto> lista = servicioService.listar();
+        // 🔹 obtiene todos los servicios
 
-        return "servicios";
+        return ResponseEntity.ok(lista);
+        // 🔹 devuelve JSON
+    }
+
+    // 🔹 CREAR SERVICIO
+    @PostMapping
+    public ResponseEntity<ServicioResponseDto> crear(@RequestBody ServicioRequestDto dto) {
+
+        ServicioResponseDto nuevo = servicioService.crear(dto);
+        // 🔹 guarda el servicio
+
+        return ResponseEntity.ok(nuevo);
+        // 🔹 devuelve el creado
     }
 }

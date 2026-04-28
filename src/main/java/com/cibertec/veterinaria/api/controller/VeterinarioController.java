@@ -1,25 +1,41 @@
 package com.cibertec.veterinaria.api.controller;
 
+import com.cibertec.veterinaria.api.dto.veterinario.VeterinarioRequestDto;
+import com.cibertec.veterinaria.api.dto.veterinario.VeterinarioResponseDto;
+import com.cibertec.veterinaria.domain.service.interfaces.IVeterinarioService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import com.cibertec.veterinaria.domain.service.interfaces.ICitaService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.List;
 
-@Controller
-@RequestMapping("/api/veterinario")
+@RestController
+@RequestMapping("/api/veterinarios") // 🔹 Ruta base
+@CrossOrigin(origins = "*") // 🔹 Permite conexión externa (Angular / Bruno)
+@RequiredArgsConstructor
 public class VeterinarioController {
 
-    @Autowired
-    private ICitaService citaService;
+    private final IVeterinarioService veterinarioService;
 
-    @GetMapping("/listar")
-    public String listar(Model model) {
+    // 🔹 LISTAR TODOS
+    @GetMapping
+    public ResponseEntity<List<VeterinarioResponseDto>> listar() {
 
-        model.addAttribute("veterinarios", citaService.listarCitas());
+        List<VeterinarioResponseDto> lista = veterinarioService.listar();
+        // 🔹 Llama al service para obtener datos
 
-        return "veterinarios";
+        return ResponseEntity.ok(lista);
+        // 🔹 Devuelve respuesta en JSON
+    }
+
+    // 🔹 CREAR VETERINARIO
+    @PostMapping
+    public ResponseEntity<VeterinarioResponseDto> crear(@RequestBody VeterinarioRequestDto dto) {
+
+        VeterinarioResponseDto nuevo = veterinarioService.crear(dto);
+        // 🔹 Envía datos al service
+
+        return ResponseEntity.ok(nuevo);
+        // 🔹 Devuelve el veterinario creado
     }
 }

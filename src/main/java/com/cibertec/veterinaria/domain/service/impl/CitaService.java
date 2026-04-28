@@ -1,5 +1,6 @@
 package com.cibertec.veterinaria.domain.service.impl;
 
+import com.cibertec.veterinaria.api.dto.cita.CitaRequestDto;
 import com.cibertec.veterinaria.api.dto.cita.CitaResponseDto;
 import com.cibertec.veterinaria.data.entity.Cita;
 import com.cibertec.veterinaria.data.repository.ICitaRepository;
@@ -27,5 +28,17 @@ public class CitaService implements ICitaService {
     @Override
     public List<CitaResponseDto> listarCitas() {
         return citaMapper.toResponseDtoList(citaRepository.findAll());
+    }
+    @Override
+    public CitaResponseDto crear(CitaRequestDto dto) {
+        Cita cita = citaMapper.toEntity(dto);
+        Cita guardada = citaRepository.save(cita);
+        return citaMapper.toResponseDto(guardada);
+    }
+    @Override
+    public List<CitaResponseDto> crearLote(List<CitaRequestDto> lista) {
+        return lista.stream()
+                .map(dto -> crear(dto)) // reutilizas tu método crear
+                .toList();
     }
 }

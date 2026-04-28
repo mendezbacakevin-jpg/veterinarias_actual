@@ -12,7 +12,7 @@ public class Servicio {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_servicio;
+	private Integer id_servicio;
 
 	private String nombre_servicio;
 	 private BigDecimal precio;
