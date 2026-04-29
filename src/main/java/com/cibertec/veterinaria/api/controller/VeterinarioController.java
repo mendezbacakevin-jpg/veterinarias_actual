@@ -1,5 +1,6 @@
 package com.cibertec.veterinaria.api.controller;
-
+// 🔴 IMPORT CORRECTO
+import jakarta.validation.Valid;
 import com.cibertec.veterinaria.api.dto.veterinario.VeterinarioRequestDto;
 import com.cibertec.veterinaria.api.dto.veterinario.VeterinarioResponseDto;
 import com.cibertec.veterinaria.domain.service.interfaces.IVeterinarioService;
@@ -30,8 +31,16 @@ public class VeterinarioController {
 
     // 🔹 CREAR VETERINARIO
     @PostMapping
-    public ResponseEntity<VeterinarioResponseDto> crear(@RequestBody VeterinarioRequestDto dto) {
+    public ResponseEntity<VeterinarioResponseDto> crear(@Valid @RequestBody VeterinarioRequestDto dto) {
+        //  (AGREGADO) Validación rápida antes de ir al service
+        // Evita que lleguen nulls y luego explote en BD o mapper
+        if (dto.nombre() == null || dto.nombre().isBlank()) {
+            throw new RuntimeException("El nombre es obligatorio");
+        }
 
+        if (dto.especialidad() == null || dto.especialidad().isBlank()) {
+            throw new RuntimeException("La especialidad es obligatoria");
+        }
         VeterinarioResponseDto nuevo = veterinarioService.crear(dto);
         // 🔹 Envía datos al service
 
