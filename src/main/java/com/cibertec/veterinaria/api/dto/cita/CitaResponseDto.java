@@ -8,6 +8,12 @@ public record CitaResponseDto(
         String nombreMascota,
         LocalDate fecha,
         LocalTime hora,
-        String estado
+        String estado,
+        String motivo,
+        String nombreVeterinario,
+        String nombreServicio,
+        Integer id_animal,
+        Integer id_servicio,
+        Integer id_veterinario
 ) {
 }

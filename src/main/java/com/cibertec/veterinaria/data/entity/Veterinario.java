@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 public class Veterinario {
 
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_veterinario;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id_veterinario; // ✅ CAMBIO: int → Integer
 
   
     private String nombre;

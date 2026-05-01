@@ -11,9 +11,14 @@ public interface ICitaService {
 
     Cita guardarCita(Cita cita);
     List<CitaResponseDto> listarCitas();
-    // 🔥 ESTE FALTABA
+    //  crea
     CitaResponseDto crear(CitaRequestDto dto);
 
     List<CitaResponseDto> crearLote(List<CitaRequestDto> lista);
+
+    // 👇 AGREGADO
+    CitaResponseDto obtenerPorId(Integer id);
+    CitaResponseDto actualizar(Integer id, CitaRequestDto dto);
+    void eliminar(Integer id);
 
 }

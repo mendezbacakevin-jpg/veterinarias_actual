@@ -44,7 +44,7 @@ public class VeterinarioController {
         VeterinarioResponseDto nuevo = veterinarioService.crear(dto);
         // 🔹 Envía datos al service
 
-        return ResponseEntity.ok(nuevo);
+        return ResponseEntity.status(201).body(nuevo); // ✅ MEJOR PRÁCTICA (CREACIÓN)
         // 🔹 Devuelve el veterinario creado
     }
 }

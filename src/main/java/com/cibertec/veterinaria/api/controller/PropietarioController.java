@@ -1,15 +1,27 @@
 package com.cibertec.veterinaria.api.controller;
 
-import com.cibertec.veterinaria.domain.service.interfaces.ICitaService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.cibertec.veterinaria.api.dto.propietario.PropietarioRequestDto;
+import com.cibertec.veterinaria.domain.service.interfaces.IPropietarioService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/api/propietario")
+@RestController //  CAMBIADO (antes era @Controller)
+@RequestMapping("/api/propietarios") //  mejor en plural
+@CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class PropietarioController {
 
-    @Autowired
-    private ICitaService citaService;
+    private final IPropietarioService propietarioService; //  CORREGIDO
 
+    @PostMapping
+    public ResponseEntity<?> crear(@Valid @RequestBody PropietarioRequestDto dto) {
+        return ResponseEntity.ok(propietarioService.crear(dto));
+    }
+
+    @GetMapping
+    public ResponseEntity<?> listar() {
+        return ResponseEntity.ok(propietarioService.listar());
+    }
 }

@@ -12,30 +12,30 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CitaMapper {
 
-    // 🔹 DTO → ENTITY
-    // ❌ TENÍAS DUPLICADO ESTE MÉTODO → ERROR
+    @Mapping(target = "animal", ignore = true)
+    @Mapping(target = "veterinario", ignore = true)
+    @Mapping(target = "servicio", ignore = true)
+    @Mapping(target = "estadoCita", ignore = true)
+
     Cita toEntity(CitaRequestDto dto);
 
-    // 🔹 ENTITY → DTO
+    @Mapping(source = "motivo", target = "motivo")
     @Mapping(source = "id_cita", target = "idCita")
-    // 🔹 Mapear id de BD → DTO (porque nombres distintos)
-
-    @Mapping(source = "estadoCita", target = "estado")
-    // 🔹 Tu entity tiene "estadoCita" pero el DTO "estado"
-
+    @Mapping(source = "animal.id_animal", target = "id_animal")
+    @Mapping(source = "servicio.id_servicio", target = "id_servicio")
+    @Mapping(source = "veterinario.id_veterinario", target = "id_veterinario")
     @Mapping(source = "animal.nombre", target = "nombreMascota")
-    // 🔹 IMPORTANTE: si no mapeas relaciones → sale null
+    @Mapping(source = "veterinario.nombre", target = "nombreVeterinario")
+    @Mapping(source = "servicio.nombre_servicio", target = "nombreServicio")
+    //  SOLUCIÓN: acceder al nombre del estado
+    @Mapping(source = "estadoCita.nombre_estado", target = "estado")
 
     CitaResponseDto toResponseDto(Cita cita);
 
-    // 🔹 LISTA
     List<CitaResponseDto> toResponseDtoList(List<Cita> citas);
+
     default String map(EstadoCita estadoCita) {
-        // 🔹 Si es null, evita error
-        if (estadoCita == null) {
-            return null;
-        }
-        // 🔹 Devuelve el nombre o descripción
-        return estadoCita.getNombre_estado(); // 👈 ajusta según tu entidad
+        if (estadoCita == null) return null;
+        return estadoCita.getNombre_estado();
     }
 }

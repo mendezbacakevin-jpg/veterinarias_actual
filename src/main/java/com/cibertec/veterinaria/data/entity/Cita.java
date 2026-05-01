@@ -34,9 +34,9 @@ public class Cita {
 	    @JoinColumn(name = "id_veterinario", referencedColumnName = "id_veterinario", nullable = true)
 	    private Veterinario veterinario;
 
-	    @ManyToOne
-	    @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = true)
-	    private EstadoCita estadoCita;
+    @ManyToOne
+    @JoinColumn(name = "id_estado")
+    private EstadoCita estadoCita; // 👈 relación real
 	   
 	    
 	    @ManyToOne
@@ -142,14 +142,13 @@ public class Cita {
 			this.veterinario = veterinario;
 		}
 
-		public EstadoCita getEstadoCita() {
-			return estadoCita;
-		}
+       public EstadoCita getEstadoCita() {
+        return estadoCita;
+           }
 
-		public void setEstadoCita(EstadoCita estadoCita) {
-			this.estadoCita = estadoCita;
-		}
-
+         public void setEstadoCita(EstadoCita estadoCita) {
+        this.estadoCita = estadoCita;
+    }
 		public Servicio getServicio() {
 			return servicio;
 		}
