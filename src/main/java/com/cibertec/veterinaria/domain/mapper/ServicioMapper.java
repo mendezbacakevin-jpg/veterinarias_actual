@@ -17,6 +17,8 @@ public interface ServicioMapper {
     // 🔹 ENTITY → DTO
     @Mapping(source = "id_servicio", target = "id")
     @Mapping(source = "nombre_servicio", target = "nombre")
+    @Mapping(source = "descripcion", target = "descripcion")
+    @Mapping(source = "icono", target = "icono")
     ServicioResponseDto toResponseDto(Servicio entity);
 
     // 🔹 DTO → ENTITY

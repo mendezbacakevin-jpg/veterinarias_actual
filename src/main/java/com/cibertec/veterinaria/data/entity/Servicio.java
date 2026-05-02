@@ -14,20 +14,22 @@ public class Servicio {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id_servicio;
 
-	private String nombre_servicio;
+	 private String nombre_servicio;
 	 private BigDecimal precio;
-
-	 
+     private String descripcion;
+	 private String icono;
 	 
 	 public Servicio () {}
 
 
 
-	 public Servicio(int id_servicio, String nombre_servicio, BigDecimal precio) {
+	 public Servicio(int id_servicio, String nombre_servicio, BigDecimal precio, String descripcion, String icono) {
 		super();
 		this.id_servicio = id_servicio;
 		this.nombre_servicio = nombre_servicio;
 		this.precio = precio;
+        this.descripcion = descripcion;
+        this.icono = icono;
 	 }
 
 
@@ -66,10 +68,13 @@ public class Servicio {
 		 this.precio = precio;
 	 }
 	 
-	 
-	 
-	 
-	 
+	 public  String getDescripcion() { return descripcion; }
+	 public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
+
+
+    public  String getIcono() { return icono; }
+    public void setIcono(String icono) { this.icono = icono; }
 	 
 	 
 	 

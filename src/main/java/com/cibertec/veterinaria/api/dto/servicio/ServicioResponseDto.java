@@ -4,7 +4,7 @@ public record ServicioResponseDto(
         Integer id,
         String nombre,
         String descripcion,
-        Double precio
-
+        Double precio,
+        String icono
 )
 { }

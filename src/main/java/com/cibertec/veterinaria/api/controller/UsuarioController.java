@@ -20,7 +20,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/pago")
+@RequestMapping("/api/seguridad")
 public class UsuarioController {
 
     // 🔹 ATRIBUTOS (AQUÍ VAN)
@@ -53,16 +53,16 @@ public class UsuarioController {
         nuevo.setEmail(email);
         nuevo.setPassword(password);
         usuarioService.actualizar(nuevo);
-
+/*
         try {
             emailService.sendWelcomeEmail(email, username);
         } catch (MessagingException e) {
             model.addAttribute("mensaje", "Usuario registrado, pero falló el correo.");
             return "login";
-        }
+        }*/
 
         model.addAttribute("mensaje", "Usuario registrado correctamente.");
-        return "login";
+        return "usuario registrado";
     }
 
     // 🔹 LOGIN modi
